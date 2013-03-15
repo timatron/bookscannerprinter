@@ -12,7 +12,7 @@ if len(sys.argv) == 2:
 else:
     url = "http://www.timschwartz.org"
 
-qr_image = MakeQRImage("http://www.timschwartz.org")
+qr_image = MakeQRImage(url)
 qr_image.show()
 
 serialport = ThermalPrinter.SERIALPORT
