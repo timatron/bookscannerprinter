@@ -190,7 +190,7 @@ class QRCode(object):
 		raise Exception("Method not relevant to Python port")
 
 	def make_image(self,
-		mode = "RGBA", bg = "white", fg = "black", block_in_pixels = 9, border_in_blocks = 2, rounding = 0,
+		mode = "RGBA", bg = "white", fg = "black", block_in_pixels = 13, border_in_blocks = 0, rounding = 0,
 		tl = True, bl = True, br = True, tr = True,
 	):
 		"""
@@ -220,8 +220,8 @@ class QRCode(object):
 
 			return rectangle
 
-		block_in_pixels = 9 #pixels per box
-		border_in_blocks = 2 #boxes as border
+		block_in_pixels = 13 #pixels per box
+		border_in_blocks = 0 #boxes as border
 		pixelsize = (self.getModuleCount() + border_in_blocks + border_in_blocks) * block_in_pixels
 
 		im = Image.new(mode, (pixelsize, pixelsize), bg)
