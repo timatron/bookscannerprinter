@@ -349,4 +349,13 @@ le Opening April 18, 2013 5-7pm
 """
     p.print_markup(markup)
 
+    # runtime dependency on Python Imaging Library
+#    import Image, ImageDraw
+#    i = Image.open("example-lammas.png")
+#    data = list(i.getdata())
+#    w, h = i.size
+#    p.print_bitmap(data, w, h, True)
+    p.linefeed()
+    p.linefeed()
+    p.linefeed()
 
