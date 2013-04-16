@@ -32,7 +32,10 @@ def listen():
     row = cursor.fetchone ()
     if row == None:
         print "No book found"
-        #qr_image = MakeQRImage(url)
+
+	p.print_text('Book not found.')
+        
+	#qr_image = MakeQRImage(url)
          #generate qr code for google books link with qr code
          #print "We dont have information on that book, but feel free to check it out online here:" + qrcode
     else:
