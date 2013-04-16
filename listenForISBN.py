@@ -7,12 +7,19 @@ import MySQLdb
 from lib.pyqrcode.pyqrcode import *
 from lib.pythermalprinter.printer import *
 
+
+def linepad():
+    p.linefeed()
+    p.linefeed()
+    p.linefeed()
+    p.linefeed()	
+
 def listen():
     isbn = raw_input("Enter ISBN to Search")
 
     try:
         conn = MySQLdb.connect (host="localhost",
-            unix_socket='/usr/local/var/mysql/Tims-MacBook-Pro.local.sock',
+            unix_socket='/var/run/mysqld/mysqld.sock',
             user="root",
             passwd="",
             db="abebooks")
@@ -30,6 +37,10 @@ def listen():
          #print "We dont have information on that book, but feel free to check it out online here:" + qrcode
     else:
         print "Book found"
+
+	p.print_text('Book found. Printing...')	
+	linepad()
+	
         gTitle = row[0]
         author = row[1]
         date = row[2]
@@ -38,8 +49,24 @@ def listen():
         subject = row[5]
         qrLink = row[6]
 
-#        im = Image.open("./images/qrcodes_bmp/" + str(isbn) + ".bmp")
-
+        im = Image.open("./images/qrcodes_bmp/" + str(isbn) + ".bmp")
+	data = list(im.getdata())
+	p.print_bitmap(data,384,384,True)
+	p.linefeed();
+	p.print_text(gTitle)
+	p.linefeed()
+	p.linefeed()
+	p.print_text(author)
+	p.linefeed()
+	p.linefeed()
+	p.print_text(date + '\n' + format + '\n' + subject ) 
+	p.linefeed()
+	p.linefeed()
+	p.linefeed()
+	p.print_text('Materials On Reserve'  + '\n' + 'Victoria H. Myhren Gallery'  + '\n' + 'Through May 5, 2013' )
+	linepad()
+	linepad()
+	
         print description
          #check to see if qr code exists
          #print out the data
@@ -47,14 +74,14 @@ def listen():
     conn.close ()
     listen()
 
-#
-#serialport = ThermalPrinter.SERIALPORT
-#if not os.path.exists(serialport):
-#    sys.exit("ERROR: Serial port not found at: %s" % serialport)
-#p = ThermalPrinter(serialport=serialport)
+
+serialport = ThermalPrinter.SERIALPORT
+if not os.path.exists(serialport):
+    sys.exit("ERROR: Serial port not found at: %s" % serialport)
+p = ThermalPrinter(serialport=serialport)
 
 listen()
-#
+
 
 #print "printer initalized"
 #data = list(qr_image.getdata())
